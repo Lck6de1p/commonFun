@@ -1,21 +1,16 @@
+Function.prototype.bind = function(context, ...args1) {
+  const func = this
+  if (typeof func !== 'function') {
+    throw new TypeError('err')
+  }
+  return function(...args2) {
+    const funcArgs = args1.concat(args2)
+    return func.apply(context, funcArgs)
+  }
+}
 
 function list() {
   return Array.prototype.slice.call(arguments)
-}
-
-// 手写bind
-Function.prototype.bind = function() {
-  const slice = Array.prototype.slice,
-        func = this,
-        _thisArg = arguments[0]
-  if (typeof func !== 'function') {
-    throw new TypeError('绑定的不是一个函数，无法调用！')
-  }
-  const args = slice.call(arguments, 1)
-  return function() {
-    const funcArgs = args.concat(slice.call(arguments))
-    return func.apply(_thisArg, funcArgs)
-  }
 }
 
 var list1 = list(1,2,3)
@@ -29,5 +24,3 @@ console.log(list2)
 
 var list3 = leadingThirtySevenList(1,2,3)
 console.log(list3)
-
-
