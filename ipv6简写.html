@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function helper(ipv6) {
+      const regex = /^[0]+/
+      let arr = ipv6.split(':')
+      // 若存在空对象则说明不是完全的ipv6格式return
+      if (arr.length !== 8 || !arr.every(item => item !== "")) return ipv6
+      // 清空多余的0
+      for (let i = 0; i < arr.length; i++) {
+        arr[i] = arr[i].replace(regex,"") === "" ? "0" : arr[i].replace(regex,"")
+      }
+      let maxCount = 0;
+      let maxStart = -1
+      let start = -1
+      let count = 0
+      //　计算最长相连0的个数
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === "0") {
+          if (!count) {
+            start = i
+          }
+          count++
+        } 
+        if (count > maxCount) {
+          maxStart = start
+          maxCount = count
+        }
+        if (arr[i] !== "0") count = 0
+      }
+      if (maxCount > 1) {
+        arr.splice(maxStart, maxCount, ':')
+      }
+      const regex2 = /[":"]{3}/
+      let shortIp = arr.join(':').replace(regex2, '::')　
+      return shortIp === ":" ? "::" : shortIp
+    }  
+
+    const ip = {
+      1: '0001:0000:0000:0000:0000:0000:0000:0000',
+      2: '0000:0001:0000:0000:0000:0000:0000:0000',
+      3: '0000:0000:0000:0000:0001:0000:0000:0000',
+      4: '0000:0000:0000:0000:0000:0000:0000:0000',
+      5: '0000:0000:0000:0010:00e0:0010:0001:0001',
+      6: '0001:1000:0200:0010:00e0:0010:0001:0001',
+      7: '0001:0000:0000:0010:0000:0000:0000:0001',
+      8: '0001:0000:0000:0010:0080:0000:0000:0000',
+      9: '0001:0000:0000:0000:0080:0000:0000:0000',
+    }
+    for (let i = 1; i <= 9; i++) {
+      console.log(`测试用例${i}结果为 ${helper(ip[i])}`)
+    }
+
+  </script>
+</body>
+</html>
