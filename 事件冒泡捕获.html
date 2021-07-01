@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #father {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+    }
+    #son {
+      width: 50px;
+      height: 50px;
+      background-color: blue;
+    }
+  </style>
+  
+</head>
+<body>
+  
+  <div id="father">
+    <div id="son"></div>
+  </div>
+  <script>
+  const fatherDOM = document.getElementById('father')
+  const sonDOM = document.getElementById('son')
+
+  fatherDOM.addEventListener('click', ()=> {
+    console.log('fatherClick　捕获')
+  },true)
+  fatherDOM.addEventListener('click', ()=> {
+    console.log('fatherClick　冒泡')
+  })
+  sonDOM.addEventListener('click', ()=> {
+    console.log('sonClick　捕获')
+  }, true)
+  sonDOM.addEventListener('click', ()=> {
+    console.log('sonClick　冒泡')
+  })
+  </script>
+</body>
+</html>
